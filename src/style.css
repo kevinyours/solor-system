@@ -1,0 +1,10 @@
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+#space-canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+}
