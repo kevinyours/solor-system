@@ -1,5 +1,6 @@
 import {
     Clock,
+    AxesHelper,
     RingGeometry,
     Scene,
     SphereGeometry,
@@ -25,6 +26,7 @@ export const Colors = {
 export const Shared = {
     clock: new Clock(),
     scene: new Scene(),
+    axesHelper: new AxesHelper(100),
     glftLoader: new GLTFLoader(),
     textureLoader: new TextureLoader(),
     camera: new OrthographicCamera(
@@ -35,8 +37,9 @@ export const Shared = {
         1,
         1000,
     ),
-    ambientLight: new AmbientLight('white', 1),
-    directionalLight: new DirectionalLight('white', 1),
+    /** https://dev-t-blog.tistory.com/23 **/
+    ambientLight: new AmbientLight(0xffffff, 1),
+    directionalLight: new DirectionalLight(0xffffff, 1),
 };
 
 export const Geometry = {

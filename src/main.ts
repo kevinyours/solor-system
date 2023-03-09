@@ -15,21 +15,24 @@ async function init() {
         antialias: true,
     });
 
-    const { camera, clock, scene } = Shared;
-
-    camera.position.x = -5;
-    camera.position.y = -5;
-    camera.position.z = 10;
+    const { camera, clock, scene, ambientLight, axesHelper } = Shared;
 
     scene.add(camera);
+    scene.add(ambientLight);
+    scene.add(axesHelper);
 
     const controls = new OrbitControls(camera, renderer.domElement);
+    controls.rotateSpeed = 1.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.8;
+    controls.minDistance = 5;
+    controls.maxDistance = 50;
 
     // Dat GUI
     const gui = new dat.GUI();
-    gui.add(camera.position, 'x', -5, 5, 0.1).name('카메라 X');
-    gui.add(camera.position, 'y', -5, 5, 0.1).name('카메라 Y');
-    gui.add(camera.position, 'z', 2, 10, 0.1).name('카메라 Z');
+    gui.add(camera.position, 'x', -100, 100, 0.1).name('카메라 X');
+    gui.add(camera.position, 'y', -100, 100, 0.1).name('카메라 Y');
+    gui.add(camera.position, 'z', -100, 100, 0.1).name('카메라 Z');
 
     const { solorSystem, earthSystem, moonSystem } = await bootstrap(renderer);
 
@@ -39,17 +42,15 @@ async function init() {
         // solorSystem.rotation.y += delta;
         // earthSystem.rotation.y += delta;
         // moonSystem.rotation.y += delta;
-        // group1.rotation.y += delta;
-        // group2.rotation.y += delta;
-        // group3.rotation.y += delta;
 
-        // controls.update();
+        controls.update();
+        camera.lookAt(axesHelper.position);
+        camera.updateProjectionMatrix();
         renderer.render(scene, camera);
         renderer.setAnimationLoop(draw);
     }
 
     function onResize() {
-        // camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.render(scene, camera);
