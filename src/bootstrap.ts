@@ -1,19 +1,12 @@
 import * as THREE from 'three';
-import { Shared } from './config';
 import { makeGroup } from './helpers/group';
-import { Planet } from './stars/base/Planet';
-import { Stella } from './stars/base/Stella';
-import { Satellite } from './stars/base/Satellite';
-
-/**
- * https://sketchfab.com/PiedroNZ/collections/space-for-free-6b98ac257a2447dcaf528091903d61c7
- */
+import { Planet } from './stars/Planet';
+import { Stella } from './stars/Stella';
+import { Satellite } from './stars/Satellite';
 
 async function bootstrap(renderer: THREE.WebGLRenderer) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
-
-    const { scene } = Shared;
 
     /**
      * 태양간 행성간 크기
@@ -25,18 +18,16 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         src: '/models/mercury.glb',
     });
     await mercury.loadMesh();
-    // mercury.mesh.scale.set(0.3, 0.3, 0.3);
+    mercury.mesh.scale.set(0.2, 0.2, 0.2);
     const mercurySystem = makeGroup(mercury.mesh);
-    // mercurySystem.position.x = 50;
 
     const venus = new Planet({
         name: 'venus',
         src: '/models/venus.glb',
     });
     await venus.loadMesh();
-    // venus.mesh.scale.set(0.9, 0.9, 0.9);
+    venus.mesh.scale.set(0.3, 0.3, 0.3);
     const venusSystem = makeGroup(venus.mesh);
-    // venusSystem.position.x = 100;
 
     const moon = new Satellite({
         name: 'moon',
@@ -52,15 +43,14 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
     });
     await earth.loadMesh();
     const earthSystem = makeGroup([earth.mesh, moonSystem]);
-    // earthSystem.position.x = 150;
 
     const mars = new Planet({
         name: 'mars',
         src: '/models/mars.glb',
     });
     await mars.loadMesh();
+    mars.mesh.scale.set(0.32, 0.32, 0.32);
     const marsSystem = makeGroup(mars.mesh);
-    // marsSystem.position.x = 230;
 
     const jupiter = new Planet({
         name: 'jupiter',
@@ -68,7 +58,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
     });
     await jupiter.loadMesh();
     jupiter.mesh.rotation.x = -Math.PI / 2;
-    jupiter.mesh.scale.set(11.2, 11.2, 11.2);
+    jupiter.mesh.scale.set(1.4, 1.4, 1.4);
     const jupiterSystem = makeGroup(jupiter.mesh);
 
     const saturn = new Planet({
@@ -76,7 +66,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         src: '/models/saturn.glb',
     });
     await saturn.loadMesh();
-    saturn.mesh.scale.set(9.4, 9.4, 9.4);
+    saturn.mesh.rotation.x = Math.PI / 2;
     const saturnSystem = makeGroup(saturn.mesh);
 
     const uranus = new Planet({
@@ -84,7 +74,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         src: '/models/uranus.glb',
     });
     await uranus.loadMesh();
-    uranus.mesh.scale.set(0.01, 0.01, 0.01);
+    uranus.mesh.scale.set(0.00002, 0.00002, 0.00002);
     const uranusSystem = makeGroup(uranus.mesh);
 
     const neptune = new Planet({
@@ -92,6 +82,8 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         src: '/models/neptune.glb',
     });
     await neptune.loadMesh();
+    neptune.mesh.scale.set(0.09, 0.09, 0.09);
+    neptune.mesh.rotation.x = Math.PI / 2;
     const neptuneSystem = makeGroup(neptune.mesh);
 
     const pluto = new Planet({
@@ -99,6 +91,9 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         src: '/models/pluto.glb',
     });
     await pluto.loadMesh();
+    pluto.mesh.scale.set(0.6, 0.6, 0.6);
+    pluto.mesh.rotation.x = THREE.MathUtils.degToRad(260);
+    pluto.mesh.rotation.z = THREE.MathUtils.degToRad(180);
     const plutoSystem = makeGroup(pluto.mesh);
 
     const sun = new Stella({
@@ -106,11 +101,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         src: '/models/sun.glb',
     });
     await sun.loadMesh();
-
-    /**
-     * 태양계 행성간 거리
-     * https://m.blog.naver.com/jsy945/220893963552
-     */
+    sun.mesh.scale.set(0.26, 0.26, 0.26);
 
     const solorSystem = makeGroup([
         sun.mesh,
@@ -124,9 +115,38 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
         neptuneSystem,
         plutoSystem,
     ]);
-    scene.add(jupiterSystem);
 
-    return { solorSystem, earthSystem, moonSystem };
+    /**
+     * 태양계 행성간 거리
+     * https://m.blog.naver.com/jsy945/220893963552
+     */
+
+    mercurySystem.position.x = 5;
+    venusSystem.position.x = 8;
+    earthSystem.position.x = 11.2;
+    earthSystem.position.y = 1;
+    earthSystem.position.z = -0.8;
+    moonSystem.position.y = -1;
+    moonSystem.position.x = -0.45;
+    marsSystem.position.x = 16;
+    jupiterSystem.position.x = 21;
+    saturnSystem.position.x = 27;
+    uranusSystem.position.x = 31;
+    neptuneSystem.position.x = 34.5;
+    plutoSystem.position.x = 38;
+
+    return {
+        solorSystem,
+        mercurySystem,
+        venusSystem,
+        earthSystem,
+        marsSystem,
+        jupiterSystem,
+        saturnSystem,
+        uranusSystem,
+        neptuneSystem,
+        plutoSystem,
+    };
 }
 
 export default bootstrap;

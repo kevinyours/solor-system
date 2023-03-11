@@ -1,11 +1,9 @@
 import {
     Clock,
     AxesHelper,
-    RingGeometry,
+    GridHelper,
     Scene,
     SphereGeometry,
-    MeshBasicMaterial,
-    DoubleSide,
     OrthographicCamera,
     AmbientLight,
     DirectionalLight,
@@ -17,6 +15,8 @@ export const Size = {
     defaultWidth: 0.5,
     defaultHeight: 0.5,
     defaultDepth: 0.5,
+    frustumSize: 30, // 절두체 크기
+    aspect: window.innerWidth / window.innerHeight, // 윈도우 화면 비율
 };
 
 export const Colors = {
@@ -24,18 +24,20 @@ export const Colors = {
 };
 
 export const Shared = {
+    canvas: document.querySelector('#space-canvas') as HTMLCanvasElement,
     clock: new Clock(),
     scene: new Scene(),
     axesHelper: new AxesHelper(100),
+    grideHelper: new GridHelper(5),
     glftLoader: new GLTFLoader(),
     textureLoader: new TextureLoader(),
     camera: new OrthographicCamera(
-        window.innerWidth / -2,
-        window.innerWidth / 2,
-        window.innerHeight / 2,
-        window.innerHeight / -2,
-        1,
-        1000,
+        (Size.frustumSize * Size.aspect) / -2,
+        (Size.frustumSize * Size.aspect) / 2,
+        Size.frustumSize / 2,
+        Size.frustumSize / -2,
+        0.01,
+        2000,
     ),
     /** https://dev-t-blog.tistory.com/23 **/
     ambientLight: new AmbientLight(0xffffff, 1),
@@ -43,10 +45,5 @@ export const Shared = {
 };
 
 export const Geometry = {
-    ring: new RingGeometry(9, 12, 30, 16, 0, 6.28),
     sphere: new SphereGeometry(1, 32, 32),
-};
-
-export const Material = {
-    ring: new MeshBasicMaterial({ color: Colors.defaultColor, side: DoubleSide }),
 };

@@ -1,7 +1,7 @@
 import { Object3D } from 'three';
-import { Star, StarProps } from './Star';
-import { Shared, Size } from '../../config';
-import { Nullable } from '../../type';
+import { Star, StarProps } from './base/Star';
+import { Shared, Size } from '../config';
+import { Nullable } from '../type';
 
 /**
  * 항성

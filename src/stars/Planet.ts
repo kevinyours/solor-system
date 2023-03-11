@@ -1,4 +1,4 @@
-import { GltfType, GltfTypeProps } from './GLTF';
+import { GltfType, GltfTypeProps } from './base/GLTF';
 
 /**
  * 행성
