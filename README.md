@@ -1,6 +1,8 @@
 # solor-system
 
-## references
+![preview](preview.gif)
+
+## models references
 
 https://sketchfab.com/3d-models/orbiting-solar-system-2dc67402c61c4b41935abe834c454894
 
