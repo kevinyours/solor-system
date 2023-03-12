@@ -4,23 +4,28 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import bootstrap from './bootstrap';
 import { Shared, Size } from './config';
 
-const { canvas, camera, clock, scene, ambientLight, axesHelper, grideHelper } = Shared;
+const { canvas, camera, clock, scene, ambientLight, axesHelper, grideHelper, textureLoader } = Shared;
 const { frustumSize } = Size;
 
 async function init() {
     const renderer = new THREE.WebGLRenderer({
         canvas,
         antialias: true,
+        alpha: true,
     });
+    renderer.setClearColor(0x000000, 0);
 
-    camera.position.y = Math.PI / 6;
-    camera.position.x = Math.PI / 2;
-    camera.position.z = Math.PI / 2;
+    camera.position.y = 15;
+    camera.position.x = Math.PI / 2 - 15;
+    camera.position.z = -10;
+    camera.zoom = 0.4;
+    camera.updateProjectionMatrix();
 
     scene.add(camera);
     scene.add(ambientLight);
-    scene.add(axesHelper);
-    scene.add(grideHelper);
+    scene.background = textureLoader.load('./textures/galaxy.jpg');
+    // scene.add(axesHelper);
+    // scene.add(grideHelper);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.rotateSpeed = 1.0;
@@ -30,20 +35,45 @@ async function init() {
     controls.maxDistance = 50;
 
     // Dat GUI
-    const gui = new dat.GUI();
-    gui.add(camera.position, 'x', -100, 100, 0.1).name('카메라 X');
-    gui.add(camera.position, 'y', -100, 100, 0.1).name('카메라 Y');
-    gui.add(camera.position, 'z', -100, 100, 0.1).name('카메라 Z');
+    // const gui = new dat.GUI();
+    // gui.add(camera.position, 'x', -100, 100, 0.1).name('카메라 X');
+    // gui.add(camera.position, 'y', -100, 100, 0.1).name('카메라 Y');
+    // gui.add(camera.position, 'z', -100, 100, 0.1).name('카메라 Z');
 
-    const { solorSystem } = await bootstrap(renderer);
+    const {
+        solorSystem,
+        mercurySystem,
+        venusSystem,
+        earthSystem,
+        moonSystem,
+        marsSystem,
+        jupiterSystem,
+        saturnSystem,
+        uranusSystem,
+        neptuneSystem,
+        plutoSystem,
+    } = await bootstrap(renderer);
     scene.add(solorSystem);
 
     function render() {
         const delta = clock.getDelta();
 
-        // solorSystem.rotation.y += delta;
-        // earthSystem.rotation.y += delta;
-        // moonSystem.rotation.y += delta;
+        /**
+         * 태양계 공전/자전 주기
+         * https://zio2017.tistory.com/171
+         */
+
+        mercurySystem.rotation.y += delta * 0.059;
+        venusSystem.rotation.y += delta * 0.001;
+        earthSystem.rotation.y += delta;
+        moonSystem.rotation.y += delta * 0.8;
+        marsSystem.rotation.y += delta;
+        jupiterSystem.rotation.y += delta * 2.8;
+        saturnSystem.rotation.y += delta * 2.4;
+        uranusSystem.rotation.y += delta * 1.5;
+        neptuneSystem.rotation.y += delta * 1.5;
+        plutoSystem.rotation.y += delta * 0.0006;
+        solorSystem.rotation.y += delta * 0.1;
 
         controls.update();
         camera.lookAt(scene.position);

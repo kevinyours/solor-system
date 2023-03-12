@@ -21,6 +21,7 @@ export const Size = {
 
 export const Colors = {
     defaultColor: '#fff',
+    backgroundColor: 'hsl(60, 8%, 5%)',
 };
 
 export const Shared = {
@@ -32,14 +33,13 @@ export const Shared = {
     glftLoader: new GLTFLoader(),
     textureLoader: new TextureLoader(),
     camera: new OrthographicCamera(
-        (Size.frustumSize * Size.aspect) / -2,
+        -(Size.frustumSize * Size.aspect) / 2,
         (Size.frustumSize * Size.aspect) / 2,
         Size.frustumSize / 2,
-        Size.frustumSize / -2,
-        0.01,
-        2000,
+        -Size.frustumSize / 2,
+        1,
+        10000,
     ),
-    /** https://dev-t-blog.tistory.com/23 **/
     ambientLight: new AmbientLight(0xffffff, 1),
     directionalLight: new DirectionalLight(0xffffff, 1),
 };

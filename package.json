@@ -1,9 +1,16 @@
 {
   "name": "@kevinyours/solor-system",
+  "version": "1.0.0",
+  "homepage": "https://kevinyours.github.io/solor-system/",
+  "repository": "https://github.com/kevinyours/solor-system.git",
+  "author": "kevinyours <admin@kevinyou.com>",
+  "license": "MIT",
   "packageManager": "yarn@3.2.1",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --progress",
-    "start": "webpack serve --progress"
+    "build": "webpack --progress --config webpack.prod.js",
+    "start": "webpack serve --progress --config webpack.dev.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "dat.gui": "^0.7.9",
@@ -14,7 +21,8 @@
     "@types/three": "^0.149.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
-    "cross-env": "^7.0.3",
+    "gh-pages": "^5.0.0",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.8.4",
     "terser-webpack-plugin": "^5.3.6",

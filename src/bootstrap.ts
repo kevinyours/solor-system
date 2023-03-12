@@ -15,7 +15,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const mercury = new Planet({
         name: 'mercury',
-        src: '/models/mercury.glb',
+        src: './models/mercury.glb',
     });
     await mercury.loadMesh();
     mercury.mesh.scale.set(0.2, 0.2, 0.2);
@@ -23,7 +23,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const venus = new Planet({
         name: 'venus',
-        src: '/models/venus.glb',
+        src: './models/venus.glb',
     });
     await venus.loadMesh();
     venus.mesh.scale.set(0.3, 0.3, 0.3);
@@ -31,7 +31,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const moon = new Satellite({
         name: 'moon',
-        src: '/models/moon.glb',
+        src: './models/moon.glb',
     });
     await moon.loadMesh();
     moon.mesh.scale.set(0.25, 0.25, 0.25);
@@ -39,14 +39,14 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const earth = new Planet({
         name: 'earth',
-        src: '/models/earth.glb',
+        src: './models/earth.glb',
     });
     await earth.loadMesh();
     const earthSystem = makeGroup([earth.mesh, moonSystem]);
 
     const mars = new Planet({
         name: 'mars',
-        src: '/models/mars.glb',
+        src: './models/mars.glb',
     });
     await mars.loadMesh();
     mars.mesh.scale.set(0.32, 0.32, 0.32);
@@ -54,7 +54,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const jupiter = new Planet({
         name: 'jupiter',
-        src: '/models/jupiter-with-europa.glb',
+        src: './models/jupiter-with-europa.glb',
     });
     await jupiter.loadMesh();
     jupiter.mesh.rotation.x = -Math.PI / 2;
@@ -63,7 +63,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const saturn = new Planet({
         name: 'saturn',
-        src: '/models/saturn.glb',
+        src: './models/saturn.glb',
     });
     await saturn.loadMesh();
     saturn.mesh.rotation.x = Math.PI / 2;
@@ -71,7 +71,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const uranus = new Planet({
         name: 'uranus',
-        src: '/models/uranus.glb',
+        src: './models/uranus.glb',
     });
     await uranus.loadMesh();
     uranus.mesh.scale.set(0.00002, 0.00002, 0.00002);
@@ -79,7 +79,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const neptune = new Planet({
         name: 'neptune',
-        src: '/models/neptune.glb',
+        src: './models/neptune.glb',
     });
     await neptune.loadMesh();
     neptune.mesh.scale.set(0.09, 0.09, 0.09);
@@ -88,7 +88,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const pluto = new Planet({
         name: 'pluto',
-        src: '/models/pluto.glb',
+        src: './models/pluto.glb',
     });
     await pluto.loadMesh();
     pluto.mesh.scale.set(0.6, 0.6, 0.6);
@@ -98,7 +98,7 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
 
     const sun = new Stella({
         name: 'sun',
-        src: '/models/sun.glb',
+        src: './models/sun.glb',
     });
     await sun.loadMesh();
     sun.mesh.scale.set(0.26, 0.26, 0.26);
@@ -121,25 +121,34 @@ async function bootstrap(renderer: THREE.WebGLRenderer) {
      * https://m.blog.naver.com/jsy945/220893963552
      */
 
-    mercurySystem.position.x = 5;
+    mercurySystem.position.x = 6;
+    mercurySystem.position.z = -2;
     venusSystem.position.x = 8;
-    earthSystem.position.x = 11.2;
+    venusSystem.position.z = 0;
+    earthSystem.position.x = 13;
     earthSystem.position.y = 1;
     earthSystem.position.z = -0.8;
     moonSystem.position.y = -1;
     moonSystem.position.x = -0.45;
-    marsSystem.position.x = 16;
-    jupiterSystem.position.x = 21;
-    saturnSystem.position.x = 27;
-    uranusSystem.position.x = 31;
+    marsSystem.position.x = -16;
+    marsSystem.position.z = -5;
+    jupiterSystem.position.x = -21;
+    jupiterSystem.position.z = 4;
+    saturnSystem.position.x = -27;
+    saturnSystem.position.z = 20;
+    uranusSystem.position.x = -31;
+    uranusSystem.position.z = -10;
     neptuneSystem.position.x = 34.5;
+    neptuneSystem.position.z = -13;
     plutoSystem.position.x = 38;
+    plutoSystem.position.z = 3;
 
     return {
         solorSystem,
         mercurySystem,
         venusSystem,
         earthSystem,
+        moonSystem,
         marsSystem,
         jupiterSystem,
         saturnSystem,
